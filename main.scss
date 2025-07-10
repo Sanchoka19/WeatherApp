@@ -1,15 +1,15 @@
 :root {
-    --primary-bg: linear-gradient(#45278B , #2E335A );
-    --secondary-bg: #4c1d95;
+    --primary-bg: linear-gradient(#2E335A, #696FA0);
+    --secondary-bg: linear-gradient(#2E335A, #1C1B33);
     --text-color: #fff;
-    --accent-color: #4c1d95;
+    --accent-color: #817fa0;
     --border-radius: 0.75rem;
     --font-inter: 'Inter', sans-serif;
 }
 
 body {
     font-family: var(--font-inter);
-    background-color: #260e47;
+    background: var(--secondary-bg);
     color: var(--text-color);
     display: flex;
     justify-content: center;
@@ -21,37 +21,43 @@ body {
 }
 
 .weather-app-container {
-    background: linear-gradient(#2E335A, #1C1B33);
     border-radius: var(--border-radius);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    width: 100%;
+    width: 100vw;
     display: grid;
-    gap: 1.5rem;
+    justify-content: center;
     padding: 1.5rem;
-    grid-template-columns: 1fr;
+    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
 
-    @media (min-width: 768px) {
-        grid-template-columns: 1fr 2fr;
+    @media (max-width: 1024px) {
+        grid-template-columns: 1fr;
     }
 
-    @media (min-width: 1024px) {
-        grid-template-columns: 1fr 2fr;
+    @media (max-width: 758px) {
+        padding: 1rem;
     }
 
     .left-panel,
     .right-panel {
         background-color: var(--primary-bg);
         border-radius: var(--border-radius);
-        padding: 1rem;
     }
 
     .left-panel {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
+        background-color: #00000013;
+        padding: 1rem;
+
+        @media (max-width: 758px) {
+            width: 100%;
+            padding: 0.5rem;
+        }
 
         .search-bar {
-            background-color: var(--secondary-bg);
+            background-color: #00000013;
             border-radius: var(--border-radius);
             padding: 0.75rem 1rem;
             display: flex;
@@ -96,17 +102,28 @@ body {
                 font-size: 8rem;
                 font-weight: 600;
                 line-height: 1;
+
+                @media (max-width: 758px) {
+                    font-size: 4rem;
+                }
             }
 
             .city {
                 font-size: 4rem;
                 font-weight: 500;
+
+                @media (max-width: 758px) {
+                    font-size: 2rem;
+                }
             }
 
             .condition {
                 font-size: 2rem;
-                color: var(--text-color);
                 opacity: 0.8;
+
+                @media (max-width: 758px) {
+                    font-size: 1rem;
+                }
             }
 
             img {
@@ -128,7 +145,6 @@ body {
                 flex-direction: column;
                 gap: 12px;
                 font-size: 1rem;
-                color: var(--text-color);
                 opacity: 0.9;
                 padding: 1rem;
                 background-color: #00000013;
@@ -148,6 +164,10 @@ body {
 
                 span {
                     font-weight: 500;
+
+                    @media (max-width: 758px) {
+                        font-size: 10px;
+                    }
                 }
             }
         }
@@ -157,27 +177,37 @@ body {
         display: flex;
         flex-direction: column;
         gap: 1.5rem;
+        grid-column: span 2;
 
-        .forecast-section {
-            background-color: var(--secondary-bg);
+        @media (max-width: 758px) {
+            padding: 0.5rem;
+        }
+
+        .forecast-section,
+        .wind-compass {
+            background-color: #00000013;
             border-radius: var(--border-radius);
             padding: 1.5rem;
+        }
+
+        .forecast-section {
+            overflow-x: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
 
             h3 {
                 font-size: 1.2rem;
                 font-weight: 600;
                 margin-bottom: 1rem;
-                color: var(--text-color);
             }
 
             .forecast-cards {
                 display: flex;
                 align-items: center;
-                overflow-x: auto;
-                gap: 1rem;
+                gap: 2rem;
                 padding: 1rem;
+                overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
-
 
                 &::-webkit-scrollbar {
                     height: 6px;
@@ -194,19 +224,16 @@ body {
 
                 .forecast-card {
                     flex: 0 0 auto;
-                    width: 100px;
-                    background-color: var(--accent-color);
                     border-radius: var(--border-radius);
-                    padding: 1.5rem 1rem;
+                    padding: 3.5rem 3rem;
                     text-align: center;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     gap: 0.5rem;
                     font-size: 0.9rem;
+                    background-color: rgba(0, 0, 0, 0.07);
                     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                    background-color: #48319D;
-
 
                     img {
                         width: 40px;
@@ -227,9 +254,6 @@ body {
         }
 
         .wind-compass {
-            background-color: var(--secondary-bg);
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -238,7 +262,6 @@ body {
             h3 {
                 font-size: 1.2rem;
                 font-weight: 600;
-                color: var(--text-color);
             }
 
             .compass-inner {
@@ -246,40 +269,46 @@ body {
                 width: 120px;
                 height: 120px;
                 border-radius: 50%;
-                background-color: var(--accent-color);
+                background-color: var(--secondary-bg);
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-                gap: 8px;
 
-                .arrow {
-                    position: absolute;
-                    width: 0;
-                    height: 0;
-                    border-left: 10px solid transparent;
-                    border-right: 10px solid transparent;
-                    border-bottom: 20px solid var(--text-color);
-                    transform-origin: bottom center;
-                    transition: transform 0.5s ease-out;
-                    display: none;
-                }
+                &>div {
+                    display: flex;
+                    gap: 8px;
+                    align-items: flex-end;
 
-                .wind-speed-display {
-                    font-size: 1.8rem;
-                    font-weight: 700;
-                    color: var(--text-color);
-                }
 
-                .wind-unit {
-                    font-size: 0.8rem;
-                    opacity: 0.7;
+                    .arrow {
+                        position: absolute;
+                        width: 0;
+                        height: 0;
+                        border-left: 10px solid transparent;
+                        border-right: 10px solid transparent;
+                        border-bottom: 20px solid var(--text-color);
+                        transform-origin: bottom center;
+                        transition: transform 0.5s ease-out;
+                    }
+
+                    .wind-speed-display {
+                        font-size: 1.8rem;
+                        font-weight: 700;
+                    }
+
+                    .wind-unit {
+                        font-size: 0.8rem;
+                        opacity: 0.7;
+                        margin-bottom: 3px;
+                    }
                 }
             }
         }
     }
 }
 
+// Message Box
 #message-box {
     position: fixed;
     bottom: 1rem;
@@ -288,22 +317,22 @@ body {
     color: white;
     padding: 0.75rem;
     border-radius: 0.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
     display: none;
     z-index: 1000;
     transition: opacity 0.3s ease-in-out;
-}
 
-#message-box.show {
-    display: block;
-}
+    &.show {
+        display: block;
+    }
 
-#message-box button {
-    margin-left: 0.5rem;
-    font-weight: bold;
-    background: none;
-    border: none;
-    color: inherit;
-    cursor: pointer;
+    button {
+        margin-left: 0.5rem;
+        font-weight: bold;
+        background: none;
+        border: none;
+        color: inherit;
+        cursor: pointer;
+    }
 }
-

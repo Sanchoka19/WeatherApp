@@ -1,6 +1,7 @@
 const API_KEY = '3b9a7f516d45030744c61efad1ca35a9';
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/';
 
+
 const cityInput = document.getElementById('city-input');
 const currentTemp = document.getElementById('current-temp');
 const currentCity = document.getElementById('current-city');
@@ -36,7 +37,7 @@ async function fetchWeather(endpoint, city) {
           displayMessage(`ქალაქი არ მოიძებნა: "${city}". გადაამოწმეთ შეყვანილი ტექსი.`);
           break;
         case 401:
-          displayMessage('Invalid or missing API key. Please check your OpenWeatherMap API key.');
+          displayMessage('არასწორი ან გამოტოვებული API გასაღები. გთხოვთ შეამოწმოთ API გასაღები.');
           break;
         default:
           displayMessage(`Error ${response.status}: ${response.statusText}`);
@@ -45,7 +46,7 @@ async function fetchWeather(endpoint, city) {
     }
     return await response.json();
   } catch (err) {
-    displayMessage(`Network error: ${err.message}. Check your internet connection.`);
+    displayMessage(`Network error: ${err.message}. შეამოწმე თქვენი ინტერნეტ კავშირი.`);
     return null;
   }
 }
@@ -58,9 +59,9 @@ function updateCurrentWeatherUI(data) {
   weatherIcon.alt = data.weather[0].description;
 
   humidityValue.textContent = `${data.main.humidity}%`;
-  windSpeedValue.textContent = `${data.wind.speed.toFixed(1)} m/s`;
-  pressureValue.textContent = `${data.main.pressure} hPa`;
-  visibilityValue.textContent = `${(data.visibility / 1000).toFixed(1)} km`;
+  windSpeedValue.textContent = `${data.wind.speed.toFixed(1)} მ/წმ`;
+  pressureValue.textContent = `${data.main.pressure} პოდი`;
+  visibilityValue.textContent = `${(data.visibility / 1000).toFixed(1)} კმ`;
 
   if (typeof data.wind.deg === 'number') {
     windArrow.style.transform = `rotate(${data.wind.deg}deg)`;
@@ -92,7 +93,7 @@ function populateHourlyForecast(forecastData) {
 
   const nextFive = forecastData.list
     .filter(item => item.dt * 1000 > now)
-    .slice(0, 5)
+    .slice(0, 8)
     .map(item => {
       const date = new Date(item.dt * 1000);
       return createForecastCard({
@@ -124,8 +125,8 @@ function populateDailyForecast(forecastData) {
     const date = new Date(item.dt * 1000);
     dailyCardsContainer.appendChild(
       createForecastCard({
-        dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
-        monthDay: date.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit' }),
+        dayName: date.toLocaleDateString('ka-GE', { weekday: 'short' }),
+        monthDay: date.toLocaleDateString('ka-Ge', { month: '2-digit', day: '2-digit' }),
         icon: item.weather[0].icon,
         description: item.weather[0].description,
         temp: Math.round(item.main.temp),
@@ -136,7 +137,7 @@ function populateDailyForecast(forecastData) {
 
 async function getWeatherData(city) {
   if (!API_KEY) {
-    displayMessage('Please add your OpenWeatherMap API key.', true);
+    displayMessage('გთხოვ დაამატეთ თქვენი OpenWeatherMap API გასაღები.', true);
     return;
   }
   displayMessage('ამინდის მონაცემების მიღება...', false);
@@ -170,7 +171,7 @@ function resetCurrentWeatherUI() {
   currentCity.textContent = 'N/A';
   currentCondition.textContent = 'N/A';
   weatherIcon.src = '';
-  weatherIcon.alt = 'No weather icon';
+  weatherIcon.alt = 'ამინდის icon არ არსებობს';
   humidityValue.textContent = '--%';
   windSpeedValue.textContent = '-- m/s';
   pressureValue.textContent = '-- hPa';
